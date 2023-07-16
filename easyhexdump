@@ -1,0 +1,60 @@
+import locale
+import socket #import socket to switch the hex to ip addresses
+
+
+hexDump = '78d2 94a6 75b1 147d da12 34dc 0800 4500 ' \
+          '0059 0000 4000 4006 1287 c0a8 010f c0a8 ' \
+          '0101 f87c 01bb 5087 e285 2849 991d 8018 ' \
+          'ffff fdc3 0000 0101 080a 77cb d864 2c59 ' \
+          '6086 1703 0300 20bb 6b4a 14a0 035f 1328 ' \
+          'd698 b300 4991 9a48 a150 7aef 3b58 682a ' \
+          'f343 fc6b 2fe2 67'
+
+#Ethernet Header
+destMac = hexDump[0:14]
+sourceMac = hexDump[15:29]
+
+#IP Header
+ipVersion = hexDump[35:36]
+headerLength = hexDump[36:37]
+totalLength = hexDump[40:44]
+flagsAndOffset = hexDump[50:54]
+ttl = hexDump[55:57]
+ipProtocol = hexDump[57:59]
+checksum = hexDump[60:64]
+sourceIP = hexDump[65:74] #format(int(sourceIP[0:2], 16), int(sourceIP[2:4], 16), int(sourceIP[5:7], 16), int(sourceIP[7:9], 16)))
+
+destIP = hexDump[75:84]
+
+#TCP Header
+sourcePort = format(int(hexDump[85:89], 16)) #changed formatting
+destPort = format(int(hexDump[90:94], 16))
+dataOffset = hexDump[115:119]
+
+
+#easy print IP no module needed
+print("The IP address is {}.{}.{}.{}".format(int(sourceIP[0:2], 16), int(sourceIP[2:4], 16), int(sourceIP[5:7], 16), int(sourceIP[7:9], 16)))
+
+# Use the example to create a format string that will take any hex dump, formatted like the one above, and print the
+# IP address and port the traffic is coming from, and the IP address and port it is going.
+print("The Source IP address is {}.{}.{}.{}".format(int(sourceIP[0:2], 16), int(sourceIP[2:4], 16), int(sourceIP[5:7], 16), int(sourceIP[7:9], 16)))
+print("The Source port is " + sourcePort)
+print("The Destination IP address is {}.{}.{}.{}".format(int(destIP[0:2], 16), int(destIP[2:4], 16), int(destIP[5:7], 16), int(destIP[7:9], 16)))
+print("The Destination port is " + destPort)
+
+# Creating a dictionary called networkDictionary with keys 'source', 'destination', and 'ipProtocol'.
+# i imported sockets for this
+networkDictionary = {}
+
+# Assign values for Ethernet Header
+networkDictionary['source'] = hexDump[0:14]
+networkDictionary['destination'] = hexDump[15:29]
+
+# Assign values for IP Header
+networkDictionary['source'] = socket.inet_ntoa(bytes.fromhex(sourceIP))
+networkDictionary['destination'] = socket.inet_ntoa(bytes.fromhex(destIP))
+
+# Assign values for IP Protocol
+networkDictionary['ipProtocol'] = hexDump[57:59]
+
+print(networkDictionary)
