@@ -1,0 +1,15 @@
+http is open
+  -gobuster dir -u
+  	maybe use tags -x .php,.sh,.txt
+
+file metadata
+  -file
+  -exiftool
+
+given limited shell
+  -launch local httpserver
+  -wget phpbash from local 
+  -open webshell at httpserver/phpbash.php
+
+to get  terminal shell
+  -python -c “import pty;pty.spawn(‘/bin/bash’)”
