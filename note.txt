@@ -1,3 +1,6 @@
+priv esc - dirty and dry
+johnjhacking.com
+
 http is open
   -gobuster dir -u
   	maybe use tags -x .php,.sh,.txt,.html,.jpg
